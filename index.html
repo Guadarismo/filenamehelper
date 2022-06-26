@@ -1,0 +1,210 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nombre de Archivos</title>
+<script type="text/javascript" src="jquery.min.js"></script>
+</head>
+
+<body>
+
+<script>
+
+let calidad;
+let corte;
+let maquina = "";
+let ojetes = "";
+let tubos = "";
+let bolsillos = "";
+let firma = "";
+var nombre_full = "";
+
+function copiartexto() {
+  /* Get the text field */
+  var copyText = nombre_full;
+
+  /* Select the text field */
+  //copyText.select();
+  //copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the text inside the text field */
+  navigator.clipboard.writeText(copyText);
+  
+  /* Alert the copied text */
+  //alert("Copied the text: " + copyText);
+}
+
+function aleatfirma02() {
+	firma = document.getElementById("firma").value;
+}
+
+function aleatfirma01(length) {
+   var result           = '';
+   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+   var charactersLength = characters.length;
+   for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+}
+
+function getValueCalidad(radio) {
+calidad = radio.value;
+acumulador_nombre();
+console.log(calidad);
+}
+
+function infCorte(radio) {
+corte = document.getElementById("cortesi").checked === true ? `${corte = "Corte"}${maquina}` : `${corte = ""}${maquina = ""}`;
+console.log(corte);
+acumulador_nombre();
+}
+
+function maq(radio) {
+maquina = radio.value;
+console.log(maquina);
+infCorte();
+acumulador_nombre();
+}
+
+function infaa(checkbox) {
+	tubos = document.getElementById("tubos").checked === true ? "Tubos" : "";
+	ojetes = document.getElementById("ojetes").checked === true ? "Ojetes" : "";
+	bolsillos = document.getElementById("bolsillos").checked === true ? "Bolsillos" : "";
+	console.log(ojetes,tubos,bolsillos);
+	acumulador_nombre();
+}
+
+function acumulador_nombre() {
+//console.log(calidad);
+var num_orden = document.getElementById("num_orden").value;
+var nom_cliente = document.getElementById("nom_cliente").value;
+var material = document.getElementById("material").value;
+
+var ancho = document.getElementById("ancho").value;
+var alto = document.getElementById("alto").value;
+var cant_copias = document.getElementById("cant_copias").value;
+var aaotro = document.getElementById("aaotro").value;
+var vendedora = document.getElementById("vendedora").value;
+
+let fecha = new Date();
+/*let codigo = [fecha.getDate(), (fecha.getMonth() + 1), fecha.getFullYear(), fecha.getHours(), fecha.getMinutes()].join('');*/
+let dia = `${fecha.getDate() < 10 ? "0" + fecha.getDate() : fecha.getDate()}`;
+let mes = `${(fecha.getMonth() + 1) < 10 ? "0" + (fecha.getMonth() + 1) : fecha.getMonth() + 1}`;
+let hora = `${fecha.getHours() < 10 ? "0" + fecha.getHours() : fecha.getHours()}`;
+let min = `${fecha.getMinutes() < 10 ? "0" + fecha.getMinutes() : fecha.getMinutes()}`;
+/*let codigo = `${date.getDate()}${(date.getMonth() + 1) < 10 ? return ("0" + date.getMonth()) : return date.getMonth();}`;*/
+let codigo = document.getElementById("cortesi").checked === true ? `${firma === "" ? aleatfirma01(2) : firma}${fecha.getFullYear()}${mes}#${dia}${hora}${min}` : "";
+let maquina = document.getElementById("cortesi").checked === true ? document.getElementById("maquina").innerHTML = `<label><input type="radio" name="RadioGroup3" value="(Summa)" onchange="maq(this)" />
+        Summa</label>
+      <br /><label><input type="radio" name="RadioGroup3" value="(Mimaki)" onchange="maq(this)"/>
+        Mimaki</label>
+		<br /><label><input type="radio" name="RadioGroup3" value="(LASER)" onchange="maq(this)"/>
+        Laser</label>
+		<br>
+		Firma<input type="text" id="firma" onkeyup="aleatfirma02()"/>`
+		: document.getElementById("maquina").innerHTML = "";
+
+nombre_full = `0${num_orden} ${nom_cliente} ${material}${calidad}${corte} (${vendedora}) ${ancho}x${alto} (${cant_copias} Copia-s)${ojetes}${tubos}${bolsillos}${aaotro} ${codigo}`;
+
+document.getElementById("nombre_archivo").innerHTML = nombre_full;
+
+/*document.getElementById("nombre_archivo").innerHTML = num_orden + nom_cliente + material + ancho + "x" + alto + "(" + cant_copias + " Copia-s)" + corte + aaotro + codigo;*/
+
+}
+</script>
+
+<table border="1" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <td>Numero de Orden </td>
+    <td><input type="number" id="num_orden" onKeyUp="acumulador_nombre()"/></td>
+  </tr>
+  <tr> 
+  <tr>
+    <td>Nombre del Cliente</td>
+    <td><input type="text" id="nom_cliente" onKeyUp="acumulador_nombre()"/></td>
+  </tr>
+  <tr>
+    <td>Material</td>
+    <td><select id="material">
+      <option value="Lona10" onClick="acumulador_nombre()">Lona10</option>
+	  <option value="Lona11" onClick="acumulador_nombre()">Lona11</option>
+	  <option value="Lona13" onClick="acumulador_nombre()">Lona13#440 Extrafuerte</option>
+      <option value="Vinil" onClick="acumulador_nombre()">Vinil Brillante Blanco</option>
+      <option value="Clear" onClick="acumulador_nombre()">Clear</option>
+      <option value="MICRO" onClick="acumulador_nombre()">Microperforado</option>
+      <option value="Esmerilado" onClick="acumulador_nombre()">Esmerilado</option>
+      <option value="FloorGraphic" onClick="acumulador_nombre()">Floor Graphic</option>
+      <option value="VinilMate" onClick="acumulador_nombre()">Vinil Mate</option>
+      <option value="VinilTextil" onClick="acumulador_nombre()">Vinil Textil</option>
+	  <option value="Litho" onClick="acumulador_nombre()">Litho</option>
+	  <option value="Otro_Material" onClick="acumulador_nombre()">Otro</option>
+    </select>
+    </td>
+  </tr>
+  <tr>
+    <td>Ancho</td>
+    <td><input type="number" id="ancho" onKeyUp="acumulador_nombre()"/></td>
+  </tr>
+  <tr>
+    <td>Alto</td>
+    <td><input type="number" id="alto" onKeyUp="acumulador_nombre()"/></td>
+  </tr>
+  <tr>
+    <td>Cantidad de Copias</td>
+    <td><input type="number" id="cant_copias" onKeyUp="acumulador_nombre()" value="1" /></td>
+  </tr>
+  <tr>
+    <td>Vendedor@</td>
+    <td><input type="text" id="vendedora" onKeyUp="acumulador_nombre()"/></td>
+  </tr>
+  <tr>
+    <td>Calidad</td>
+    <td><p>
+	<form name="myForm01">
+      <label>
+        <input type="radio" class="RadioGroup2" name="RadioGroup2" value="Solvente" onChange="getValueCalidad(this)" />
+        Solvente</label>
+      <br />
+      <label>
+        <input type="radio" class="RadioGroup2" name="RadioGroup2" value="Alta" onChange="getValueCalidad(this)" />
+        Alta</label>
+      <br />
+	  </form>
+    </p></td>
+  </tr>
+  <tr>
+    <td>&iquest;Lleva Corte? </td>
+    <td><p>
+      <label>
+        <input type="radio" name="RadioGroup1" id="cortesi" value="Corte" onChange="infCorte(this)" />
+        Si</label>
+      <br />
+      <label>
+        <input type="radio" name="RadioGroup1" value="" onChange="infCorte(this)"/>
+        No</label>
+      <br />
+	  <div id="maquina"></div>
+    </p></td>
+  </tr>
+    <tr>
+    <td>Aplicaciones Adicionales </td>
+    <td><input type="checkbox" id="ojetes" value="Ojetes" onChange="infaa(this)"/>Ojetes<br />
+	<input type="checkbox" id="tubos" value="Tubos" onChange="infaa(this)"/>Tubos<br />
+	<input type="checkbox" id="bolsillos" value="Bolsillos" onChange="infaa(this)"/>Bolsillos<br />
+	Otro:<input type="text" id="aaotro" onKeyUp="acumulador_nombre()"/><br />
+	</td>
+  </tr>
+
+</table>
+<br>
+<center><b><div id="nombre_archivo">Nombre del archivo...</div></b><br>
+  <label>
+  <input type="submit" value="Copiar" onClick="copiartexto()">
+  <input type="submit" value="Actualizar" onClick="acumulador_nombre()">
+  </label>
+</center>
+
+</body>
+</html>
