@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -19,6 +18,7 @@ let tubos = "";
 let bolsillos = "";
 let firma = "";
 var nombre_full = "";
+var solo_codigo = "";
 
 function copiartexto() {
   /* Get the text field */
@@ -33,6 +33,12 @@ function copiartexto() {
   
   /* Alert the copied text */
   //alert("Copied the text: " + copyText);
+}
+
+function copiar_codigo() {
+	acumulador_nombre();
+	var copyText = solo_codigo;
+	navigator.clipboard.writeText(copyText);
 }
 
 function aleatfirma02() {
@@ -87,6 +93,7 @@ var alto = document.getElementById("alto").value;
 var cant_copias = document.getElementById("cant_copias").value;
 var aaotro = document.getElementById("aaotro").value;
 var vendedora = document.getElementById("vendedora").value;
+var ver_codigo = document.getElementById("ver_codigo").value;
 
 let fecha = new Date();
 /*let codigo = [fecha.getDate(), (fecha.getMonth() + 1), fecha.getFullYear(), fecha.getHours(), fecha.getMinutes()].join('');*/
@@ -107,6 +114,9 @@ let maquina = document.getElementById("cortesi").checked === true ? document.get
 		: document.getElementById("maquina").innerHTML = "";
 
 nombre_full = `0${num_orden} ${nom_cliente} ${material}${calidad}${corte} (${vendedora}) ${ancho}x${alto} (${cant_copias} Copia-s)${ojetes}${tubos}${bolsillos}${aaotro} ${codigo}`;
+
+solo_codigo = `${firma === "" ? aleatfirma01(2) : firma}${fecha.getFullYear()}${mes}#${dia}${hora}${min}`;
+document.getElementById("ver_codigo").innerHTML = solo_codigo;
 
 document.getElementById("nombre_archivo").innerHTML = nombre_full;
 
@@ -139,7 +149,7 @@ document.getElementById("nombre_archivo").innerHTML = nombre_full;
       <option value="VinilMate" onClick="acumulador_nombre()">Vinil Mate</option>
       <option value="VinilTextil" onClick="acumulador_nombre()">Vinil Textil</option>
 	  <option value="Litho" onClick="acumulador_nombre()">Litho</option>
-	  <option value="Otro_Material" onClick="acumulador_nombre()">Otro</option>
+	  <option value="Otro" onClick="acumulador_nombre()">Otro</option>
     </select>
     </td>
   </tr>
@@ -195,7 +205,13 @@ document.getElementById("nombre_archivo").innerHTML = nombre_full;
 	<input type="checkbox" id="bolsillos" value="Bolsillos" onChange="infaa(this)"/>Bolsillos<br />
 	Otro:<input type="text" id="aaotro" onKeyUp="acumulador_nombre()"/><br />
 	</td>
+	<tr><td>Copiar Sólamente Código<br><input type="submit" value="Copiar Código" onClick="copiar_codigo()"></td>
+	<td>
+	<b><div id="ver_codigo">Cod</div></b>
+	</td>
+	</tr>
   </tr>
+  
 
 </table>
 <br>
